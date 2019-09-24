@@ -1,0 +1,49 @@
+<app-panel-box>
+
+  <span panel-title>Products</span>
+
+  <span panel-body>
+
+      <input type="text" placeholder="Search products here" class="form-control" [(ngModel)]="filteredProducts">
+      <div class="alert alert-success" *ngIf="filteredProducts">
+        Filtered Products: {{filteredProducts}}
+      </div>
+
+      <table class="table table-bordered" *ngIf="products && products.length">
+
+        <tr>
+          <th>
+            <button class="btn btn-success" (click)="toggleImage()">
+              {{showImage ? 'Hide Image' : 'Show Image'}}
+            </button>
+          </th>
+          <th>Product Name</th>
+          <th>Product Code</th>
+          <th>Release Date</th>
+          <th>Price</th>
+          <th>Ratings</th>
+        </tr>
+
+        <tr *ngFor="let product of products | products: filteredProducts">
+          <td>
+            <img src="{{product.productImage}}" style="width: 50px;" *ngIf="showImage">
+          </td>
+          <td>
+            <!-- Be careful it is something new -->
+            <a [routerLink]="['/products', product.productCode]" >
+              {{product.productName}}
+            </a>
+          </td>
+          <td>{{product.productCode}}</td>
+          <td>{{product.releaseDate}}</td>
+          <td>{{product.productPrice}}</td>
+          <td>
+            <app-rating [rating]="product.productRating"></app-rating>
+          </td>
+        </tr>
+
+
+      </table>
+    </span>
+
+</app-panel-box>
